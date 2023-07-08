@@ -65,7 +65,7 @@ public class BossController : MonoBehaviour // renommer player controller ?
         if (val.sqrMagnitude > 0)
         {
             float angle = Mathf.Atan2(val.y, val.x);
-            m_rigidbody.MoveRotation(angle * Mathf.Rad2Deg);
+            transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
         }
     }
 
