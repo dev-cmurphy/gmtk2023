@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.UI;
 
 /// <summary>
@@ -21,6 +22,8 @@ public class Attack : MonoBehaviour
     private LayerMask m_hitLayers;
 
     private Collider2D m_collider;
+
+    public UnityEvent OnAttackOver;
 
     private void Awake()
     {
@@ -48,6 +51,8 @@ public class Attack : MonoBehaviour
     private IEnumerator DestroyAfterTime()
     {
         yield return new WaitForSeconds(m_lifetime);
+        OnAttackOver.Invoke();
+        OnAttackOver.RemoveAllListeners();
         Destroy(this.gameObject);
     }
 }

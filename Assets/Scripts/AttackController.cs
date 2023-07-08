@@ -19,10 +19,14 @@ public class AttackController : MonoBehaviour
 
     public UnityEvent OnLightAttackLaunch;
     public UnityEvent OnHeavyAttackLaunch;
+    public UnityEvent OnAttackPreparing;
+    public UnityEvent OnAnyAttackLaunch;
 
     [SerializeField]
     private Transform m_attackParent;
 
+    [SerializeField]
+    private BossController m_bossController;
 
     private abstract class AttackState
     {
@@ -68,6 +72,7 @@ public class AttackController : MonoBehaviour
         {
             if (inputValue.isPressed && m_readyForAttack)
             {
+                m_controller.OnAttackPreparing.Invoke();
                 return new AttackPreparing(m_controller, m_controller.HeavyAttackHoldThreshold);
             }
 
@@ -97,6 +102,7 @@ public class AttackController : MonoBehaviour
         {
             if (!inputValue.isPressed)
             {
+                m_controller.OnAnyAttackLaunch.Invoke();
                 if (m_attackTimer < m_preparationTime)
                 {
                     m_controller.OnLightAttackLaunch.Invoke();
@@ -132,6 +138,7 @@ public class AttackController : MonoBehaviour
     private void LaunchAttack(Attack attack)
     {
         Attack atk = Instantiate(attack, this.transform);
+        atk.OnAttackOver.AddListener(OnAttackOver);
         atk.transform.SetParent(m_attackParent);
         atk.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         atk.transform.SetParent(null);
@@ -145,5 +152,10 @@ public class AttackController : MonoBehaviour
     public void OnAttack(InputValue value)
     {
         m_currentState = m_currentState.UpdateFromInput(value);
+    }
+
+    public void OnAttackOver()
+    {
+        m_bossController.RemoveActiveAttack();
     }
 }
