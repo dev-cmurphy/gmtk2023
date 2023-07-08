@@ -20,6 +20,9 @@ public class AttackController : MonoBehaviour
     public UnityEvent OnLightAttackLaunch;
     public UnityEvent OnHeavyAttackLaunch;
 
+    [SerializeField]
+    private Transform m_attackParent;
+
 
     private abstract class AttackState
     {
@@ -129,7 +132,7 @@ public class AttackController : MonoBehaviour
     private void LaunchAttack(Attack attack)
     {
         Attack atk = Instantiate(attack, this.transform);
-        atk.transform.SetParent(this.transform);
+        atk.transform.SetParent(m_attackParent);
         atk.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         atk.transform.SetParent(null);
     }
