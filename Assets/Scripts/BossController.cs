@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class BossController : MonoBehaviour
+public class BossController : MonoBehaviour // renommer player controller ?
 {
     [SerializeField]
     private BossMovementSettings m_moveSettings;
@@ -35,8 +35,14 @@ public class BossController : MonoBehaviour
         m_rigidbody.MovePosition(oldPos + delta);
     }
 
+    // à mettre dans un fichier à part ?
     public void OnMove(InputValue value)
     {
         m_lastMoveInput = value.Get<Vector2>();
+    }
+
+    public void OnLook(InputValue value)
+    {
+        // look around ?
     }
 }
