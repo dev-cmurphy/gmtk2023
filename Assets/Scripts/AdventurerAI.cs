@@ -255,4 +255,10 @@ public class AdventurerAI : MonoBehaviour
             return this;
         }
     }
+
+
+    public void Kill()
+    {
+        Destroy(this.gameObject);
+    }
 }
