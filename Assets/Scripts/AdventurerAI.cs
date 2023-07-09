@@ -15,9 +15,9 @@ public class AdventurerAI : MonoBehaviour
     [SerializeField]
     private Health m_adventurerHealth;
 
-    private State m_currentState;
+    public AdventurerAttackController AttackController;
 
-    public Attack MeleeAttackPrefab;
+    private State m_currentState;
 
 
     private void Awake()
@@ -226,14 +226,8 @@ public class AdventurerAI : MonoBehaviour
         public Attacking(BossController boss, Seeker seeker, Health health, AdventurerAI adventurer) : base(boss, seeker, health, adventurer)
         {
             m_seeker.enabled = false;
-            m_attackInstance = Instantiate(adventurer.MeleeAttackPrefab);
 
-            Vector2 bossDir = m_bossController.transform.position - m_seeker.transform.position;
-
-            float angle = Mathf.Atan2(bossDir.y, bossDir.x);
-            var rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
-
-            m_attackInstance.transform.SetPositionAndRotation(adventurer.transform.position, rotation);
+            adventurer.AttackController.Attack(m_bossController.transform.position);
         }
 
         public override State Update(float dt)

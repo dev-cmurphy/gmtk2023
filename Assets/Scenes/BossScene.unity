@@ -1098,6 +1098,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1223,6 +1224,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7cc987e43c5afe48a3c6a5f901c1ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_followed: {fileID: 2029636549}
+  m_speed: 1
 --- !u!1 &541685058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,6 +1424,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &625743631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 625743632}
+  m_Layer: 7
+  m_Name: AttackParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &625743632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625743631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.75, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2029636549}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &679838760
 GameObject:
@@ -3163,6 +3209,7 @@ GameObject:
   - component: {fileID: 2029636553}
   - component: {fileID: 2029636552}
   - component: {fileID: 2029636555}
+  - component: {fileID: 2029636556}
   m_Layer: 7
   m_Name: DummyPlayer
   m_TagString: Untagged
@@ -3178,11 +3225,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029636548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.75, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 199833871}
+  - {fileID: 625743632}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3272,7 +3320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bossController: {fileID: 1092496889}
   m_adventurerHealth: {fileID: 2029636555}
-  MeleeAttackPrefab: {fileID: 379278949566897707, guid: eb0205c37e5a55b4aa821a2d19ac45d9, type: 3}
+  AttackController: {fileID: 2029636556}
 --- !u!114 &2029636553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3349,6 +3397,20 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2029636556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029636548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45eea33ff02a38b4dadd95daaf8d6772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_lightAttack: {fileID: 379278949566897707, guid: eb0205c37e5a55b4aa821a2d19ac45d9, type: 3}
+  m_attackParent: {fileID: 625743632}
 --- !u!1001 &2541931314371341418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3510,11 +3572,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2715366534155258043, guid: 3f20bfa7e07d62f42a866d21e9a215f2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2715366534155258043, guid: 3f20bfa7e07d62f42a866d21e9a215f2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.25
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 2715366534155258043, guid: 3f20bfa7e07d62f42a866d21e9a215f2, type: 3}
       propertyPath: m_LocalPosition.z

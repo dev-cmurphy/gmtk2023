@@ -11,6 +11,11 @@ using UnityEngine.Rendering.UI;
 public class Attack : MonoBehaviour
 {
     [SerializeField]
+    private float m_activationDelay = 0;
+
+    private float m_delayTimer;
+
+    [SerializeField]
     [Min(0f)]
     private int m_damage;
 
@@ -29,6 +34,7 @@ public class Attack : MonoBehaviour
     {
         m_collider = GetComponent<Collider2D>();
         m_collider.isTrigger = true;
+        m_delayTimer = 0;
     }
 
     private void Start()
@@ -36,9 +42,14 @@ public class Attack : MonoBehaviour
         StartCoroutine(DestroyAfterTime());
     }
 
+    private void Update()
+    {
+        m_delayTimer += Time.deltaTime;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision != null)
+        if (collision != null && m_delayTimer >= m_activationDelay)
         {
             if ((m_hitLayers.value & (1 << collision.gameObject.layer)) != 0)
             {
