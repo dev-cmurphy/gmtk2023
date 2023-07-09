@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96afdf411d515584496e5e4997800036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_activationDelay: 0
   m_damage: 8
   m_lifetime: 0.5
   m_hitLayers:
@@ -99,6 +100,7 @@ MonoBehaviour:
   OnAttackOver:
     m_PersistentCalls:
       m_Calls: []
+  m_visual: {fileID: 6219745443418252774}
 --- !u!1 &6219745443418252774
 GameObject:
   m_ObjectHideFlags: 0

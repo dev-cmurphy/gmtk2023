@@ -19,11 +19,16 @@ public class AdventurerAI : MonoBehaviour
 
     private State m_currentState;
 
+    [SerializeField]
+    private Animator m_adventurerAnimator;
+
+    private Rigidbody2D m_rigidbody;
 
     private void Awake()
     {
         m_seeker = GetComponent<Seeker>();
         m_adventurerHealth = GetComponent<Health>();
+        m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -31,9 +36,16 @@ public class AdventurerAI : MonoBehaviour
         m_currentState = new NeutralState(m_bossController, m_seeker, m_adventurerHealth, this);
     }
 
+    private Vector2 lastPos;
+    private Vector2 speed;
+
     private void Update()
     {
+        speed = (Vector2)transform.position - lastPos;
+
+        m_adventurerAnimator.SetFloat("Velocity", speed.magnitude / Time.deltaTime);
         m_currentState = m_currentState.Update(Time.deltaTime);
+        lastPos = transform.position;
     }
 
     private abstract class State
@@ -221,10 +233,11 @@ public class AdventurerAI : MonoBehaviour
 
     private class Attacking : State
     {
-        private Attack m_attackInstance;
+        private float m_attackTimer;
 
         public Attacking(BossController boss, Seeker seeker, Health health, AdventurerAI adventurer) : base(boss, seeker, health, adventurer)
         {
+            m_attackTimer = 0;
             m_seeker.enabled = false;
 
             adventurer.AttackController.Attack(m_bossController.transform.position);
@@ -232,7 +245,9 @@ public class AdventurerAI : MonoBehaviour
 
         public override State Update(float dt)
         {
-            if (m_attackInstance == null)
+            m_attackTimer += dt;
+
+            if (m_attackTimer > 0.6f)
             {
                 return new NeutralState(m_bossController, m_seeker, m_health, m_controller);
             }

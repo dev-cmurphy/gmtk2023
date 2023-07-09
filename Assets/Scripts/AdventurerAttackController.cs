@@ -14,22 +14,48 @@ public class AdventurerAttackController : MonoBehaviour
 
     private float m_attackCooldown;
 
+    [SerializeField]
+    private Animator m_adventurerAnimator;
+
+    [SerializeField]
+    private AudioClip m_attackClip;
+
+    [SerializeField]
+    private AudioSource m_audioSource;
+
     private void Update()
     {
         m_attackCooldown += Time.deltaTime;
     }
 
+    public void PlayAttackClip()
+    {
+        m_audioSource.PlayOneShot(m_attackClip);
+    }
+
+    public void PlayRandomFootStep()
+    {
+        // todo
+    }
+
     public void OnAttack(InputValue value)
     {
-        if (m_attackCooldown > 0.25f)
+        if (m_attackCooldown > 0.5f)
         {
-            Attack(m_attackParent.position);
+            m_attackCooldown = 0;
+            StartCoroutine(AttackNextFrame());
         }
+    }
+
+    private IEnumerator AttackNextFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        Attack(m_attackParent.position);
     }
 
     public void Attack(Vector2 target)
     {
-        m_attackCooldown = 0;
+        m_adventurerAnimator.SetTrigger("Attack");
         Attack atk = Instantiate(m_lightAttack, this.transform);
 
         Vector2 dir = target - (Vector2)transform.position;

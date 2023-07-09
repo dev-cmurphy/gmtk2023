@@ -91,14 +91,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96afdf411d515584496e5e4997800036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_activationDelay: 0.15
   m_damage: 3
-  m_lifetime: 0.1
+  m_lifetime: 0.45
   m_hitLayers:
     serializedVersion: 2
     m_Bits: 64
   OnAttackOver:
     m_PersistentCalls:
       m_Calls: []
+  m_visual: {fileID: 6219745443418252774}
 --- !u!1 &6219745443418252774
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +175,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.023529401, g: 0.98039216, b: 0.84761757, a: 0.39607844}
+  m_Color: {r: 0.65554714, g: 0.9528302, b: 0.9114055, a: 0.34901962}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
