@@ -21,6 +21,8 @@ public class AttackController : MonoBehaviour
     public UnityEvent OnHeavyAttackLaunch;
     public UnityEvent OnAttackPreparing;
     public UnityEvent OnAnyAttackLaunch;
+    public UnityEvent OnHeavyAttackReady;
+    public UnityEvent OnAttackCancelled;
 
     [SerializeField]
     private Transform m_attackParent;
@@ -85,15 +87,38 @@ public class AttackController : MonoBehaviour
         private float m_attackTimer;
         private float m_preparationTime;
 
+        private bool m_hasPreparedHeavy;
+        private bool m_wasCancelled;
+
         public AttackPreparing(AttackController controller, float prepTime) : base(controller)
         {
             m_preparationTime = prepTime;
             m_attackTimer = 0;
+            m_hasPreparedHeavy = false;
+            m_wasCancelled = false;
+            
+        }
+
+        public void Cancel()
+        {
+            m_wasCancelled = true;
         }
 
         public override AttackState Update(float dt)
         {
             m_attackTimer += dt;
+
+            if (m_attackTimer > m_preparationTime && !m_hasPreparedHeavy)
+            {
+                m_hasPreparedHeavy = true;
+                m_controller.OnHeavyAttackReady.Invoke();
+            }
+
+            if (m_wasCancelled)
+            {
+                m_controller.OnAttackCancelled.Invoke();
+                return new NoAttack(m_controller);
+            }
 
             return this;
         }
@@ -123,6 +148,15 @@ public class AttackController : MonoBehaviour
     private void Awake()
     {
         m_currentState = new NoAttack(this);
+    }
+
+    public void CancelPreparedAttack()
+    {
+        if (m_currentState is AttackPreparing prep)
+        {
+            m_bossController.RemoveActiveAttack();
+            prep.Cancel();
+        }
     }
 
     public void LaunchHeavyAttack()

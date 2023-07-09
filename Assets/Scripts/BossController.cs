@@ -17,6 +17,9 @@ public class BossController : MonoBehaviour // renommer player controller ?
 
     private int m_activeAttacks;
 
+    [SerializeField]
+    private Transform m_attackParent;
+
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
@@ -61,8 +64,7 @@ public class BossController : MonoBehaviour // renommer player controller ?
         Vector2 val = value.Get<Vector2>();
         if (val.sqrMagnitude > 0)
         {
-            float angle = Mathf.Atan2(val.y, val.x);
-            transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+            m_attackParent.localPosition = val.normalized * 1.4f;
         }
     }
 
