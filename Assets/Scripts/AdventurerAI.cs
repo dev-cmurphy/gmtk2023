@@ -17,6 +17,8 @@ public class AdventurerAI : MonoBehaviour
 
     private State m_currentState;
 
+    public Attack MeleeAttackPrefab;
+
 
     private void Awake()
     {
@@ -209,7 +211,7 @@ public class AdventurerAI : MonoBehaviour
             float dist = 8f;
             perp *= dist;
 
-            Vector2 targetSafePoint = (-bossDir * dist * 0.5f) +  perp + (0.5f * dist * Random.insideUnitCircle);
+            Vector2 targetSafePoint = (0.5f * dist * -bossDir) +  perp + (0.5f * dist * Random.insideUnitCircle);
 
             return targetSafePoint;
         }
@@ -219,18 +221,24 @@ public class AdventurerAI : MonoBehaviour
 
     private class Attacking : State
     {
-        // temp
-        private float m_attackTimer;
+        private Attack m_attackInstance;
 
         public Attacking(BossController boss, Seeker seeker, Health health, AdventurerAI adventurer) : base(boss, seeker, health, adventurer)
         {
-            m_attackTimer = 0f;
+            m_seeker.enabled = false;
+            m_attackInstance = Instantiate(adventurer.MeleeAttackPrefab);
+
+            Vector2 bossDir = m_bossController.transform.position - m_seeker.transform.position;
+
+            float angle = Mathf.Atan2(bossDir.y, bossDir.x);
+            var rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+
+            m_attackInstance.transform.SetPositionAndRotation(adventurer.transform.position, rotation);
         }
 
         public override State Update(float dt)
         {
-            m_attackTimer += dt;
-            if (m_attackTimer > 1f)
+            if (m_attackInstance == null)
             {
                 return new NeutralState(m_bossController, m_seeker, m_health, m_controller);
             }
