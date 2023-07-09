@@ -43,6 +43,10 @@ public class Attack : MonoBehaviour
             if ((m_hitLayers.value & (1 << collision.gameObject.layer)) != 0)
             {
                 Debug.Log($"Hit! {gameObject.name} on {collision.gameObject}");
+                if (collision.gameObject.TryGetComponent<Health>(out Health health))
+                {
+                    health.Damage(m_damage);
+                }
                 m_collider.enabled = false;
             }
         }

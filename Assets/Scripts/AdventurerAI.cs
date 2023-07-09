@@ -1,6 +1,8 @@
 ﻿using Pathfinding;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(Seeker))]
 public class AdventurerAI : MonoBehaviour
@@ -10,16 +12,21 @@ public class AdventurerAI : MonoBehaviour
     [SerializeField]
     private BossController m_bossController;
 
+    [SerializeField]
+    private Health m_adventurerHealth;
+
     private State m_currentState;
+
 
     private void Awake()
     {
         m_seeker = GetComponent<Seeker>();
+        m_adventurerHealth = GetComponent<Health>();
     }
 
     private void Start()
     {
-        m_currentState = new NeutralState(m_bossController, m_seeker);
+        m_currentState = new NeutralState(m_bossController, m_seeker, m_adventurerHealth, this);
     }
 
     private void Update()
@@ -32,87 +39,95 @@ public class AdventurerAI : MonoBehaviour
         protected bool m_hasFoundPath;
         protected BossController m_bossController;
         protected Seeker m_seeker;
+        protected Health m_health;
+        protected AdventurerAI m_controller;
 
-        public State(BossController boss, Seeker seeker)
+        public State(BossController boss, Seeker seeker, Health health, AdventurerAI controller)
         {
             m_bossController = boss;
             m_seeker = seeker;
+            m_health = health;
+            m_controller = controller;
+            m_controller = controller;
         }
 
         public abstract State Update(float dt);
-
-        protected void TryPathSearch(Vector2 target)
-        {
-            m_seeker.StartPath(m_seeker.transform.position, target, OnPathComplete);
-        }
-
-        protected virtual void OnPathComplete(Path p) { }
     }
 
     private class NeutralState : State
     {
+        private static float m_desperation;
+        private float m_reflexionTimer;
 
-        public NeutralState(BossController boss, Seeker seeker) : base(boss, seeker)
+        public NeutralState(BossController boss, Seeker seeker, Health health, AdventurerAI adventurerAI) : base(boss, seeker, health, adventurerAI)
         {
         }
 
         private bool ShouldBeAggressive()
         {
-            return true;
+            return (m_health.CurrentHealth > (m_health.MaxHealth * 0.5f)) || m_desperation > Random.Range(0.1f, 1f);
         }
 
         public override State Update(float dt)
         {
-            if (ShouldBeAggressive())
-            {
-                return new AggressiveState(m_bossController, m_seeker);
-            }
-            else
-            {
+            m_desperation += dt * 1f / 100f;
+            m_reflexionTimer += dt;
 
+            if (m_reflexionTimer > 1f)
+            {
+                if (ShouldBeAggressive())
+                {
+                    return new AggressiveState(m_bossController, m_seeker, m_health, m_controller);
+                }
+                else
+                {
+                    return new EvasiveState(m_bossController, m_seeker, m_health, m_controller);
+                }
             }
+
             return this;
         }
     }
 
-    private class AggressiveState : State
+    private abstract class PathfindingState : State
     {
-        private float m_repathRate = 0.5f;
+        private float m_repathRate = 2f;
         private float m_repathTimer;
 
-        public AggressiveState(BossController boss, Seeker seeker) : base(boss, seeker)
+        public PathfindingState(BossController boss, Seeker seeker, Health health, AdventurerAI adventurerAI) : base(boss, seeker, health, adventurerAI)
         {
             m_seeker.enabled = true;
             m_repathTimer = 0f;
             TryPathSearch(FindTarget());
         }
 
-        private bool CanAttack()
+        protected void PathChecking(float dt, bool forceRepath = false)
         {
-            return true;
-        }
-
-        public override State Update(float dt) 
-        {
-            if (CanAttack())
-            {
-                m_seeker.enabled = false;
-                return new Attacking(m_bossController, m_seeker);
-            }
-
             m_repathTimer += dt;
-            if (m_repathTimer > 1f / m_repathRate)
+            if (m_repathTimer > 1f / m_repathRate || forceRepath)
             {
                 m_repathTimer = 0f;
 
                 TryPathSearch(FindTarget());
             }
-
-            return this; 
         }
 
 
-        protected override void OnPathComplete(Path p)
+        protected bool IsInMeleeRange()
+        {
+            return Vector2.Distance(m_bossController.transform.position, m_seeker.transform.position) < 2.5f;
+        }
+
+        protected void TryPathSearch(Vector2 target)
+        {
+            NNInfo nearest = AstarPath.active.GetNearest((Vector3)target, NNConstraint.Default);
+
+            target = nearest.position;
+
+            m_seeker.StartPath(m_seeker.transform.position, target, OnPathComplete);
+        }
+
+        protected void OnPathComplete(Path p)
         {
             if (p.error)
             {
@@ -120,18 +135,94 @@ public class AdventurerAI : MonoBehaviour
             }
         }
 
-        protected Vector2 FindTarget()
+        protected virtual Vector2 FindTarget()
         {
-            return m_bossController.transform.position + (Vector3)(2f * Random.insideUnitCircle.normalized);
+            return m_bossController.transform.position + (Vector3)(2.5f * Random.insideUnitCircle.normalized);
         }
     }
+
+    private class AggressiveState : PathfindingState
+    {
+        public AggressiveState(BossController boss, Seeker seeker, Health health, AdventurerAI adventurerAI) : base(boss, seeker, health, adventurerAI)
+        {
+            TryPathSearch(FindTarget());
+        }
+
+        public override State Update(float dt) 
+        {
+            if (IsInMeleeRange())
+            {
+                m_seeker.enabled = false;
+                return new Attacking(m_bossController, m_seeker, m_health, m_controller);
+            }
+            else
+            {
+                PathChecking(dt);
+            }
+
+            return this; 
+        }
+    }
+
+    private class EvasiveState : PathfindingState
+    {
+        private float m_safeTimer;
+
+        public EvasiveState(BossController boss, Seeker seeker, Health health, AdventurerAI adventurer) : base(boss, seeker, health, adventurer)
+        {
+            m_safeTimer = 0;
+            TryPathSearch(FindTarget());
+        }
+
+        public override State Update(float dt)
+        {
+            if (IsInMeleeRange())
+            {
+                m_safeTimer = 0;
+                PathChecking(dt);
+            }
+            else
+            {
+                m_safeTimer += dt;
+            }
+
+            float safeTime = 3f;
+            if (m_safeTimer > safeTime)
+            {
+                return new NeutralState(m_bossController, m_seeker, m_health, m_controller);
+            }
+
+
+            return this;
+        }
+
+        protected override Vector2 FindTarget()
+        {
+            Vector2 bossDir = m_bossController.transform.position - m_seeker.transform.position;
+            bossDir.Normalize();
+            Vector2 perp = new(-bossDir.y, bossDir.x);
+
+            float dir = Random.Range(0, 1f) > 0.5f ? 1 : -1;
+
+            perp *= dir;
+
+            float dist = 8f;
+            perp *= dist;
+
+            Vector2 targetSafePoint = (-bossDir * dist * 0.5f) +  perp + (0.5f * dist * Random.insideUnitCircle);
+
+            return targetSafePoint;
+        }
+    }
+
+
 
     private class Attacking : State
     {
         // temp
         private float m_attackTimer;
 
-        public Attacking(BossController boss, Seeker seeker) : base(boss, seeker)
+        public Attacking(BossController boss, Seeker seeker, Health health, AdventurerAI adventurer) : base(boss, seeker, health, adventurer)
         {
             m_attackTimer = 0f;
         }
@@ -141,7 +232,7 @@ public class AdventurerAI : MonoBehaviour
             m_attackTimer += dt;
             if (m_attackTimer > 1f)
             {
-                return new NeutralState(m_bossController, m_seeker);
+                return new NeutralState(m_bossController, m_seeker, m_health, m_controller);
             }
 
             return this;

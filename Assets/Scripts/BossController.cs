@@ -1,10 +1,7 @@
 using Assets.Scripts.GameData;
-using System.Collections;
-using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.InputAction;
 
 public class BossController : MonoBehaviour // renommer player controller ?
 {

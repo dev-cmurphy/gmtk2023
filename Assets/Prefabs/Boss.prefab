@@ -214,9 +214,11 @@ GameObject:
   - component: {fileID: 1495908260672582241}
   - component: {fileID: 7179346237192031352}
   - component: {fileID: 4726365373299484227}
+  - component: {fileID: 8160071279117452148}
+  - component: {fileID: 8056876727318807241}
   m_Layer: 6
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -435,3 +437,38 @@ MonoBehaviour:
       m_Calls: []
   m_attackParent: {fileID: 7105990826519796180}
   m_bossController: {fileID: 5878683723301324647}
+--- !u!114 &8160071279117452148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069996807852864730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011f1641af725fb4d9ca9f27a645d753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxHealth: 100
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8056876727318807241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069996807852864730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 8724347565851630893
+  updateError: 0.1
+  checkTime: 0.2

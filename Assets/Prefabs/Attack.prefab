@@ -95,7 +95,7 @@ MonoBehaviour:
   m_lifetime: 0.1
   m_hitLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 128
   OnAttackOver:
     m_PersistentCalls:
       m_Calls: []
