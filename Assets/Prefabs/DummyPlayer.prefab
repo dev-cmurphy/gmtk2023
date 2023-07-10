@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974925010224231548}
   m_LocalRotation: {x: -0, y: -0, z: -0.13052596, w: 0.99144495}
-  m_LocalPosition: {x: 0.298, y: 0.09800005, z: 0}
-  m_LocalScale: {x: 0.2, y: 1, z: 1}
+  m_LocalPosition: {x: 0.476, y: 0.122, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2648281438038178597}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 1527664827
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b11f25faeb642c43b20a787f437e2d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -426,6 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02354445df373c64eb0edf0631e02c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_deathSpawn: {fileID: 547339894335407476, guid: bc2cc4718e2873f408369a88804da859, type: 3}
   m_bossController: {fileID: 0}
   m_adventurerHealth: {fileID: 9052000606761206414}
   AttackController: {fileID: 4631574222248604503}
@@ -460,7 +461,19 @@ MonoBehaviour:
         m_CallState: 2
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4976043367448208062}
+        m_TargetAssemblyTypeName: AdventurerAI, Assembly-CSharp
+        m_MethodName: Kill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4631574222248604503
 MonoBehaviour:
   m_ObjectHideFlags: 0

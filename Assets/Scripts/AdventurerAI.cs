@@ -10,6 +10,9 @@ public class AdventurerAI : MonoBehaviour
     private Seeker m_seeker;
 
     [SerializeField]
+    private GameObject m_deathSpawn;
+
+    [SerializeField]
     private BossController m_bossController;
 
     [SerializeField]
@@ -259,6 +262,9 @@ public class AdventurerAI : MonoBehaviour
 
     public void Kill()
     {
+        var spawn = Instantiate(m_deathSpawn, transform);
+        spawn.transform.localPosition = Vector3.zero;
+        spawn.transform.SetParent(null);
         Destroy(this.gameObject);
     }
 }

@@ -27,8 +27,11 @@ public class SimpleCameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 dir = m_followed.position - transform.position;
+        if (m_followed != null)
+        {
+            Vector2 dir = m_followed.position - transform.position;
 
-        transform.position += Time.deltaTime * m_speed * Mathf.Clamp(dir.magnitude, 0, 1) * (Vector3)dir.normalized;
+            transform.position += Time.deltaTime * m_speed * Mathf.Clamp(dir.magnitude, 0, 1) * (Vector3)dir.normalized;
+        }
     }
 }

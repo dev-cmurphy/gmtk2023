@@ -2739,6 +2739,90 @@ PrefabInstance:
       propertyPath: m_IncludeLayers.m_Bits
       value: 4160
       objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 479948207}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1082714431}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 479948207}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Kill
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayOneShot
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: RestartLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AdventurerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.AudioSource, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: AdventurerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8300000, guid: edae78e7c8457ca4aa773fd0481f603c, type: 3}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.AudioClip, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052000606761206414, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4810404010974017449, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
     - {fileID: 4976043367448208062, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
@@ -2782,7 +2866,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 2.5
   m_attackParent: {fileID: 479948205}
+  m_gameAnimator: {fileID: 1757600745}
   m_adventurerAnimator: {fileID: 479948206}
+  m_deathSpawn: {fileID: 547339894335407476, guid: bc2cc4718e2873f408369a88804da859, type: 3}
 --- !u!114 &479948208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7783,6 +7869,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5186262187533980246, guid: 1ad23970f2dcee14c88141c129220cab, type: 3}
   m_PrefabInstance: {fileID: 1077153110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1082714431 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3260470986817995352, guid: 8a110f4739630b545bff117e8a41050d, type: 3}
+  m_PrefabInstance: {fileID: 479948203}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1098915758
 PrefabInstance:

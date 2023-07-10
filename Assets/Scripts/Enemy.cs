@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour
 
     private float m_cooldown;
 
+    [SerializeField]
+    private GameObject m_deathSpawn;
+
     private void Awake()
     {
         m_canAttack = true;
@@ -53,6 +56,9 @@ public class Enemy : MonoBehaviour
 
     public void Kill()
     {
+        var spawn = Instantiate(m_deathSpawn, transform);
+        spawn.transform.localPosition = Vector3.zero;
+        spawn.transform.SetParent(null);
         Destroy(this.gameObject);
     }
 }

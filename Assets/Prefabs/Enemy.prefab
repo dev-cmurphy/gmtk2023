@@ -523,6 +523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_damage: 3
   m_playerTarget: {fileID: 0}
+  m_deathSpawn: {fileID: 547339894335407476, guid: 587f8e68827afe94e8707e04d8b4f1f4, type: 3}
 --- !u!58 &8544006879237457740
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class AdventurerController : MonoBehaviour
 {
@@ -14,8 +15,15 @@ public class AdventurerController : MonoBehaviour
 
     private Vector2 m_lastMoveInput;
 
+
+    [SerializeField]
+    private Animator m_gameAnimator;
+
     [SerializeField]
     private Animator m_adventurerAnimator;
+
+    [SerializeField]
+    private GameObject m_deathSpawn;
 
     private void Awake()
     {
@@ -51,5 +59,26 @@ public class AdventurerController : MonoBehaviour
         {
             m_attackParent.localPosition = val.normalized * 1.4f;
         }
+    }
+    public void Kill()
+    {
+        var spawn = Instantiate(m_deathSpawn, transform);
+        spawn.transform.localPosition = Vector3.zero;
+        spawn.transform.SetParent(null);
+        Destroy(this.gameObject);
+    }
+
+    public void RestartLevel()
+    {
+        m_gameAnimator.SetTrigger("Restart");
+
+        StartCoroutine(Restart());
+    }
+
+    private IEnumerator Restart()
+    {
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene("Menu");
     }
 }
